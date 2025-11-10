@@ -1,0 +1,13 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "com.vypnito.fluxtiers.mixin",
+  "compatibilityLevel": "JAVA_17",
+  "client": [
+    "PlayerListHudMixin",
+    "PlayerEntityRendererMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

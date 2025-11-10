@@ -1,0 +1,30 @@
+{
+  "schemaVersion": 1,
+  "id": "fluxtiers",
+  "version": "${version}",
+  "name": "FluxTiers",
+  "description": "Display player tiers and rankings from FluxTiers system",
+  "authors": [
+    "vypnito"
+  ],
+  "contact": {
+    "website": "https://fluxsmp.fun"
+  },
+  "license": "MIT",
+  "icon": "assets/fluxtiers/icon.png",
+  "environment": "client",
+  "entrypoints": {
+    "client": [
+      "com.vypnito.fluxtiers.FluxTiersMod"
+    ]
+  },
+  "mixins": [
+    "fluxtiers.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=0.14.0",
+    "minecraft": ">=1.20",
+    "java": ">=17",
+    "fabric-api": "*"
+  }
+}
