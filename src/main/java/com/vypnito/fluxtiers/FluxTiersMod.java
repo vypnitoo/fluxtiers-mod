@@ -2,6 +2,8 @@ package com.vypnito.fluxtiers;
 
 import com.vypnito.fluxtiers.api.TierApiClient;
 import com.vypnito.fluxtiers.api.TierCache;
+import com.vypnito.fluxtiers.clan.ClanManager;
+import com.vypnito.fluxtiers.commands.ClanCommand;
 import com.vypnito.fluxtiers.commands.TierCommand;
 import com.vypnito.fluxtiers.commands.TierRefreshCommand;
 import com.vypnito.fluxtiers.config.ModConfig;
@@ -20,6 +22,7 @@ public class FluxTiersMod implements ClientModInitializer {
     private static TierApiClient apiClient;
     private static TierCache tierCache;
     private static ModConfig config;
+    private static ClanManager clanManager;
 
     @Override
     public void onInitializeClient() {
@@ -28,10 +31,12 @@ public class FluxTiersMod implements ClientModInitializer {
         config = ModConfig.load();
         apiClient = new TierApiClient(config.getApiUrl());
         tierCache = new TierCache(apiClient);
+        clanManager = new ClanManager();
 
         ClientCommandRegistrationCallback.EVENT.register((dispatcher, registryAccess) -> {
             TierCommand.register(dispatcher);
             TierRefreshCommand.register(dispatcher);
+            ClanCommand.register(dispatcher);
         });
 
         ClientPlayConnectionEvents.JOIN.register((handler, sender, client) -> {
@@ -70,5 +75,9 @@ public class FluxTiersMod implements ClientModInitializer {
 
     public static ModConfig getConfig() {
         return config;
+    }
+
+    public static ClanManager getClanManager() {
+        return clanManager;
     }
 }

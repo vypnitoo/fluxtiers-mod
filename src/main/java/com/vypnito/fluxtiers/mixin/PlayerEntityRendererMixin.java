@@ -1,6 +1,7 @@
 package com.vypnito.fluxtiers.mixin;
 
 import com.vypnito.fluxtiers.FluxTiersMod;
+import com.vypnito.fluxtiers.clan.Clan;
 import com.vypnito.fluxtiers.models.PlayerTier;
 import com.vypnito.fluxtiers.util.TierFormatter;
 import net.minecraft.client.network.AbstractClientPlayerEntity;
@@ -25,8 +26,34 @@ public abstract class PlayerEntityRendererMixin extends LivingEntityRenderer<Abs
     }
 
     @Inject(method = "render(Lnet/minecraft/client/network/AbstractClientPlayerEntity;FFLnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/client/render/VertexConsumerProvider;I)V", at = @At("HEAD"))
-    private void addTierAboveName(AbstractClientPlayerEntity player, float yaw, float tickDelta, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, CallbackInfo ci) {
+    private void addClanAndTierAboveName(AbstractClientPlayerEntity player, float yaw, float tickDelta, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, CallbackInfo ci) {
         String playerName = player.getName().getString();
+        Clan clan = FluxTiersMod.getClanManager().getPlayerClan(player.getUuid());
+
+        if (clan != null) {
+            String clanTag = "§7[§b" + clan.getTag() + "§7]";
+
+            matrices.push();
+            matrices.translate(0.0D, player.getHeight() + 0.7D, 0.0D);
+            matrices.multiply(this.dispatcher.getRotation());
+            matrices.scale(-0.025F, -0.025F, 0.025F);
+
+            this.dispatcher.getTextRenderer().draw(
+                Text.literal(clanTag),
+                -(this.dispatcher.getTextRenderer().getWidth(clanTag) / 2.0F),
+                0,
+                0xFFFFFF,
+                false,
+                matrices.peek().getPositionMatrix(),
+                vertexConsumers,
+                false,
+                0,
+                light
+            );
+
+            matrices.pop();
+        }
+
         PlayerTier tier = FluxTiersMod.getTierCache().getTierSync(playerName);
 
         if (tier != null && tier.isVerified() && !tier.getTiers().isEmpty()) {
