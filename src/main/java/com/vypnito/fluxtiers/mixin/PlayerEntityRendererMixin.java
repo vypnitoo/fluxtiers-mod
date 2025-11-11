@@ -47,12 +47,12 @@ public abstract class PlayerEntityRendererMixin extends LivingEntityRenderer<Abs
             this.textRenderer.draw(
                 Text.literal(clanTag),
                 -(this.textRenderer.getWidth(clanTag) / 2.0F),
-                0,
+                0.0F,
                 0xFFFFFF,
                 false,
                 matrices.peek().getPositionMatrix(),
                 vertexConsumers,
-                false,
+                TextRenderer.TextLayerType.NORMAL,
                 0,
                 light
             );
@@ -75,12 +75,12 @@ public abstract class PlayerEntityRendererMixin extends LivingEntityRenderer<Abs
                 this.textRenderer.draw(
                     Text.literal(tierDisplay),
                     -(this.textRenderer.getWidth(tierDisplay) / 2.0F),
-                    0,
+                    0.0F,
                     0xFFFFFF,
                     false,
                     matrices.peek().getPositionMatrix(),
                     vertexConsumers,
-                    false,
+                    TextRenderer.TextLayerType.NORMAL,
                     0,
                     light
                 );
