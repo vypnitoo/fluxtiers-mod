@@ -37,7 +37,8 @@ public abstract class PlayerEntityRendererMixin extends LivingEntityRenderer<Abs
         Clan clan = FluxTiersMod.getClanManager().getPlayerClan(player.getUuid());
 
         if (clan != null) {
-            String clanTag = "§7[§b" + clan.getTag() + "§7]";
+            String clanIcon = clan.getIcon() != null ? clan.getIcon() + " " : "";
+            String clanTag = "§7[§b" + clanIcon + clan.getTag() + "§7]";
 
             matrices.push();
             matrices.translate(0.0D, player.getHeight() + 0.7D, 0.0D);
@@ -52,7 +53,7 @@ public abstract class PlayerEntityRendererMixin extends LivingEntityRenderer<Abs
                 false,
                 matrices.peek().getPositionMatrix(),
                 vertexConsumers,
-                TextRenderer.TextLayerType.NORMAL,
+                false,
                 0,
                 light
             );
@@ -80,7 +81,7 @@ public abstract class PlayerEntityRendererMixin extends LivingEntityRenderer<Abs
                     false,
                     matrices.peek().getPositionMatrix(),
                     vertexConsumers,
-                    TextRenderer.TextLayerType.NORMAL,
+                    false,
                     0,
                     light
                 );

@@ -5,11 +5,12 @@ import java.util.*;
 public class Clan {
     private final String name;
     private final String tag;
-    private final UUID leaderId;
+    private UUID leaderId;
     private final Map<UUID, ClanRank> members;
     private final Map<UUID, Long> invites;
     private String color;
     private String description;
+    private String icon;
     private final long createdAt;
 
     public Clan(String name, String tag, UUID leaderId) {
@@ -20,9 +21,12 @@ public class Clan {
         this.invites = new HashMap<>();
         this.color = "#FFFFFF";
         this.description = "";
+        this.icon = "🛡️";
         this.createdAt = System.currentTimeMillis();
 
-        this.members.put(leaderId, ClanRank.LEADER);
+        if (leaderId != null) {
+            this.members.put(leaderId, ClanRank.LEADER);
+        }
     }
 
     public String getName() {
@@ -55,6 +59,18 @@ public class Clan {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getIcon() {
+        return icon;
+    }
+
+    public void setIcon(String icon) {
+        this.icon = icon;
+    }
+
+    public void setLeaderId(UUID leaderId) {
+        this.leaderId = leaderId;
     }
 
     public long getCreatedAt() {

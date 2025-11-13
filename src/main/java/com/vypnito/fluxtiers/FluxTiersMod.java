@@ -31,7 +31,9 @@ public class FluxTiersMod implements ClientModInitializer {
         config = ModConfig.load();
         apiClient = new TierApiClient(config.getApiUrl());
         tierCache = new TierCache(apiClient);
-        clanManager = new ClanManager();
+
+        String clanApiUrl = config.getApiUrl().replace("/player/v1/tiers", "/clans");
+        clanManager = new ClanManager(clanApiUrl);
 
         ClientCommandRegistrationCallback.EVENT.register((dispatcher, registryAccess) -> {
             TierCommand.register(dispatcher);

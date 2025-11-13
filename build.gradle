@@ -3,11 +3,20 @@ plugins {
     id 'maven-publish'
 }
 
-version = project.mod_version
+apply from: 'versions.gradle'
+
+def mcVersion = project.hasProperty('mcVersion') ? project.property('mcVersion') : '1.20.1'
+def versionConfig = minecraftVersions[mcVersion]
+
+if (versionConfig == null) {
+    throw new GradleException("Unknown Minecraft version: ${mcVersion}. Available versions: ${minecraftVersions.keySet()}")
+}
+
+version = "${project.mod_version}+mc${mcVersion}"
 group = project.maven_group
 
 base {
-    archivesName = project.archives_base_name
+    archivesName = "${project.archives_base_name}-${mcVersion}"
 }
 
 repositories {
@@ -15,10 +24,10 @@ repositories {
 }
 
 dependencies {
-    minecraft "com.mojang:minecraft:${project.minecraft_version}"
-    mappings "net.fabricmc:yarn:${project.yarn_mappings}:v2"
-    modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
-    modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
+    minecraft "com.mojang:minecraft:${versionConfig.minecraft}"
+    mappings "net.fabricmc:yarn:${versionConfig.yarn}:v2"
+    modImplementation "net.fabricmc:fabric-loader:${versionConfig.loader}"
+    modImplementation "net.fabricmc.fabric-api:fabric-api:${versionConfig.fabric}"
 
     include(implementation('com.squareup.okhttp3:okhttp:4.12.0'))
     include(implementation('com.squareup.okio:okio:3.6.0'))

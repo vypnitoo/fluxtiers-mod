@@ -1,0 +1,10 @@
+ext {
+    minecraftVersions = [
+        '1.19.2': [
+            minecraft: '1.19.2',
+            yarn: '1.19.2+build.28',
+            loader: '0.14.21',
+            fabric: '0.76.0+1.19.2'
+        ]
+    ]
+}

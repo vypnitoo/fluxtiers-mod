@@ -2,6 +2,7 @@ package com.vypnito.fluxtiers.clan;
 
 import com.google.gson.*;
 import com.vypnito.fluxtiers.FluxTiersMod;
+import com.vypnito.fluxtiers.api.ClanApiClient;
 
 import java.io.*;
 import java.util.*;
@@ -12,9 +13,14 @@ public class ClanManager {
 
     private final Map<String, Clan> clans = new HashMap<>();
     private final Map<UUID, String> playerClans = new HashMap<>();
+    private final ClanApiClient apiClient;
+    private long lastRefresh = 0;
+    private static final long REFRESH_INTERVAL = 5 * 60 * 1000;
 
-    public ClanManager() {
+    public ClanManager(String apiUrl) {
+        this.apiClient = new ClanApiClient(apiUrl);
         load();
+        refreshFromApi();
     }
 
     public Clan createClan(String name, String tag, UUID leaderId) {
@@ -52,8 +58,35 @@ public class ClanManager {
     }
 
     public Clan getPlayerClan(UUID playerId) {
+        refreshIfNeeded();
         String tag = playerClans.get(playerId);
         return tag != null ? clans.get(tag) : null;
+    }
+
+    public void refreshFromApi() {
+        apiClient.fetchAllClansAsync(fetchedClans -> {
+            if (fetchedClans != null && !fetchedClans.isEmpty()) {
+                clans.clear();
+                playerClans.clear();
+                clans.putAll(fetchedClans);
+
+                for (Clan clan : fetchedClans.values()) {
+                    for (UUID memberId : clan.getMembers().keySet()) {
+                        playerClans.put(memberId, clan.getTag().toUpperCase());
+                    }
+                }
+
+                lastRefresh = System.currentTimeMillis();
+                FluxTiersMod.LOGGER.info("Refreshed {} clans from API", clans.size());
+            }
+        });
+    }
+
+    private void refreshIfNeeded() {
+        long now = System.currentTimeMillis();
+        if (now - lastRefresh > REFRESH_INTERVAL) {
+            refreshFromApi();
+        }
     }
 
     public boolean addMemberToClan(String tag, UUID playerId, Clan.ClanRank rank) {
