@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sonar - Spigot Plugin</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+        }
+
+        header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px 0;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        nav {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 28px;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 30px;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            transition: opacity 0.3s;
+            font-size: 16px;
+        }
+
+        nav a:hover {
+            opacity: 0.8;
+        }
+
+        .hero {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 100px 20px;
+            text-align: center;
+        }
+
+        .hero-content {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .hero h1 {
+            font-size: 56px;
+            margin-bottom: 20px;
+            font-weight: bold;
+        }
+
+        .hero p {
+            font-size: 22px;
+            margin-bottom: 40px;
+            opacity: 0.95;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 14px 40px;
+            background: white;
+            color: #667eea;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+            margin: 10px;
+            transition: transform 0.3s, box-shadow 0.3s;
+            font-size: 16px;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            border: 2px solid white;
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background: white;
+            color: #667eea;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        section {
+            padding: 80px 20px;
+        }
+
+        .features {
+            background: #f8f9fa;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 42px;
+            margin-bottom: 60px;
+            color: #333;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+        }
+
+        .feature-card {
+            background: white;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+            transition: transform 0.3s;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .feature-icon {
+            font-size: 40px;
+            margin-bottom: 20px;
+        }
+
+        .feature-card h3 {
+            margin-bottom: 15px;
+            color: #667eea;
+            font-size: 24px;
+        }
+
+        .feature-card p {
+            color: #666;
+            line-height: 1.8;
+        }
+
+        .installation {
+            background: white;
+        }
+
+        .code-block {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 20px;
+            border-radius: 5px;
+            overflow-x: auto;
+            margin: 20px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        .docs {
+            background: #f8f9fa;
+        }
+
+        .doc-section {
+            background: white;
+            padding: 30px;
+            margin: 20px 0;
+            border-radius: 5px;
+            border-left: 4px solid #667eea;
+        }
+
+        .doc-section h3 {
+            color: #667eea;
+            margin-bottom: 15px;
+            font-size: 22px;
+        }
+
+        .doc-section p {
+            color: #666;
+            line-height: 1.8;
+            margin-bottom: 10px;
+        }
+
+        .doc-section ul {
+            margin-left: 20px;
+            color: #666;
+        }
+
+        .doc-section li {
+            margin-bottom: 10px;
+        }
+
+        footer {
+            background: #2d2d2d;
+            color: white;
+            text-align: center;
+            padding: 40px 20px;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-bottom: 20px;
+        }
+
+        .footer-links a {
+            color: #fff;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: #667eea;
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 40px;
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .stat {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+        }
+
+        .stat-number {
+            font-size: 42px;
+            font-weight: bold;
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+
+        .stat-label {
+            color: #666;
+            font-size: 16px;
+        }
+
+        .tab-buttons {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .tab-btn {
+            padding: 10px 20px;
+            background: #e0e0e0;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background 0.3s;
+        }
+
+        .tab-btn.active {
+            background: #667eea;
+            color: white;
+        }
+
+        .tab-btn:hover {
+            background: #667eea;
+            color: white;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        @media (max-width: 768px) {
+            nav ul {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .hero h1 {
+                font-size: 36px;
+            }
+
+            .hero p {
+                font-size: 18px;
+            }
+
+            .section-title {
+                font-size: 32px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <nav class="container">
+            <div class="logo">
+                <div class="logo-icon">📡</div>
+                <span>Sonar</span>
+            </div>
+            <ul>
+                <li><a href="#features">Features</a></li>
+                <li><a href="#installation">Installation</a></li>
+                <li><a href="#documentation">Documentation</a></li>
+                <li><a href="#support">Support</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Sonar</h1>
+            <p>A powerful Spigot plugin for advanced server management and monitoring</p>
+            <a href="#installation" class="btn">Get Started</a>
+            <a href="#documentation" class="btn btn-secondary">Learn More</a>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features" id="features">
+        <div class="container">
+            <h2 class="section-title">Features</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">⚡</div>
+                    <h3>High Performance</h3>
+                    <p>Optimized for minimal resource usage. Sonar runs efficiently on any server without impacting performance.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🔧</div>
+                    <h3>Easy Configuration</h3>
+                    <p>Simple YAML configuration files make setup and customization straightforward for any skill level.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📊</div>
+                    <h3>Real-time Monitoring</h3>
+                    <p>Monitor server health and player activity in real-time with detailed statistics and reports.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🔐</div>
+                    <h3>Secure & Reliable</h3>
+                    <p>Built with security best practices to keep your server safe and data protected.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🎮</div>
+                    <h3>Player Management</h3>
+                    <p>Comprehensive tools for managing players, permissions, and server rules efficiently.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📝</div>
+                    <h3>Detailed Logging</h3>
+                    <p>Complete activity logs for auditing and debugging. Track every important server event.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section style="background: white;">
+        <div class="container">
+            <div class="stats">
+                <div class="stat">
+                    <div class="stat-number">10K+</div>
+                    <div class="stat-label">Downloads</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-number">1K+</div>
+                    <div class="stat-label">Active Servers</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-number">4.8/5</div>
+                    <div class="stat-label">Average Rating</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-number">24/7</div>
+                    <div class="stat-label">Support</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Installation Section -->
+    <section class="installation" id="installation">
+        <div class="container">
+            <h2 class="section-title">Installation</h2>
+
+            <div class="doc-section">
+                <h3>System Requirements</h3>
+                <ul>
+                    <li>Java 11 or higher</li>
+                    <li>Spigot 1.16.5 or newer</li>
+                    <li>At least 512MB free RAM</li>
+                </ul>
+            </div>
+
+            <div class="doc-section">
+                <h3>Installation Steps</h3>
+                <p><strong>Step 1:</strong> Download the latest Sonar.jar file</p>
+                <p><strong>Step 2:</strong> Place the JAR file in your server's <code>plugins</code> folder</p>
+                <div class="code-block">plugins/
+└── Sonar.jar</div>
+                <p><strong>Step 3:</strong> Restart your server</p>
+                <div class="code-block">stop
+# Wait a few seconds
+# Start your server again</div>
+                <p><strong>Step 4:</strong> Configure the plugin in <code>plugins/Sonar/config.yml</code></p>
+            </div>
+
+            <div class="doc-section">
+                <h3>Basic Configuration</h3>
+                <div class="code-block">sonar:
+  # Enable/disable the plugin
+  enabled: true
+
+  # Server name
+  server-name: "MyServer"
+
+  # Enable detailed logging
+  debug: false
+
+  # Features to enable
+  features:
+    monitoring: true
+    player-tracking: true
+    auto-save: true</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Documentation Section -->
+    <section class="docs" id="documentation">
+        <div class="container">
+            <h2 class="section-title">Documentation</h2>
+
+            <div class="doc-section">
+                <h3>Commands</h3>
+                <div style="margin-top: 15px;">
+                    <p><code>/sonar status</code> - View current server status and statistics</p>
+                    <p><code>/sonar reload</code> - Reload the plugin configuration</p>
+                    <p><code>/sonar info [player]</code> - Get detailed information about a player</p>
+                    <p><code>/sonar debug</code> - Toggle debug mode (admin only)</p>
+                </div>
+            </div>
+
+            <div class="doc-section">
+                <h3>Permissions</h3>
+                <div style="margin-top: 15px;">
+                    <p><code>sonar.admin</code> - Access to all admin commands</p>
+                    <p><code>sonar.status</code> - View server status</p>
+                    <p><code>sonar.reload</code> - Reload configuration</p>
+                    <p><code>sonar.info</code> - View player information</p>
+                </div>
+            </div>
+
+            <div class="doc-section">
+                <h3>Troubleshooting</h3>
+                <p><strong>Plugin not loading?</strong></p>
+                <ul style="margin-left: 20px; margin-top: 10px;">
+                    <li>Check if Java version is 11 or higher</li>
+                    <li>Check server console for error messages</li>
+                    <li>Verify the JAR file is in the correct plugins folder</li>
+                </ul>
+                <p style="margin-top: 15px;"><strong>High memory usage?</strong></p>
+                <ul style="margin-left: 20px; margin-top: 10px;">
+                    <li>Disable unnecessary features in config.yml</li>
+                    <li>Reduce logging level from DEBUG to INFO</li>
+                    <li>Check for plugin conflicts with other plugins</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Support Section -->
+    <section style="background: white;" id="support">
+        <div class="container">
+            <h2 class="section-title">Support & Community</h2>
+            <div class="stats">
+                <div class="stat">
+                    <div style="font-size: 32px; margin-bottom: 10px;">📧</div>
+                    <h3 style="margin-bottom: 10px; color: #667eea;">Email Support</h3>
+                    <p style="color: #666;">support@sonar-plugin.com</p>
+                </div>
+                <div class="stat">
+                    <div style="font-size: 32px; margin-bottom: 10px;">💬</div>
+                    <h3 style="margin-bottom: 10px; color: #667eea;">Discord Community</h3>
+                    <p style="color: #666;">Join our Discord server for help</p>
+                </div>
+                <div class="stat">
+                    <div style="font-size: 32px; margin-bottom: 10px;">📚</div>
+                    <h3 style="margin-bottom: 10px; color: #667eea;">Wiki & Guides</h3>
+                    <p style="color: #666;">Detailed guides and tutorials</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-links">
+                <a href="#">Home</a>
+                <a href="#">Documentation</a>
+                <a href="#">Discord</a>
+                <a href="#">GitHub</a>
+                <a href="#">Contact</a>
+            </div>
+            <p>&copy; 2024 Sonar Plugin. All rights reserved.</p>
+            <p style="margin-top: 10px; opacity: 0.7; font-size: 14px;">Made for Spigot servers with ❤️</p>
+        </div>
+    </footer>
+
+    <script>
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth' });
+                }
+            });
+        });
+
+        // Active tab functionality (if needed in future)
+        function switchTab(tabName) {
+            const contents = document.querySelectorAll('.tab-content');
+            contents.forEach(content => content.classList.remove('active'));
+            document.getElementById(tabName).classList.add('active');
+
+            const buttons = document.querySelectorAll('.tab-btn');
+            buttons.forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+        }
+    </script>
+</body>
+</html>
